@@ -1,0 +1,17 @@
+{
+  "name": "klikkeyboard",
+  "version": "1.0.0",
+  "description": "1. untuk akses langsung saja klik webhook.html\r 2. untuk nambah jumlah klik pada url dibelakang .html tambahkan berikut ?tambah=100, contoh webhook.html?tambah=100\r \tangka 100 adalah jumlah yang bisa diisi bebas untuk menambah jumlah klik sejumlah 100 (tergantung angka dibelakang)\r 3. untuk mengurangi jumlah klik pada url dibelakang .html tambahkan berikut ?kurang=50, contoh webhook.html?kurang=50\r \tangka 50 adalah jumlah yang bisa diisi bebas untuk mengurangi jumlah klik sejumlah 50 (tergantung angka dibelakang)\r 4. jika ingin reset menjadi 0 pada url dibelakang .html tambahkan berikut ?reset=0 maka angka akan menjadi 0 kembali.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

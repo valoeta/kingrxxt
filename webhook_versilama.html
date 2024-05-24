@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-size: 15em;  
+            font-family: 'ShantellSans-Regular', Arial, sans-serif;
+        }
+         @font-face {
+            font-family: 'ShantellSans-Regular';
+            src: url('font/ShantellSans-Regular.ttf'); /* Specify the path to your Jaro font file */
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div id="number">0</div>  
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function updateNumberByUrl() {
+            const url = window.location.href;
+            const numberElement = document.getElementById('number');
+            let currentNumber = parseInt(localStorage.getItem('currentNumber') || '0', 10);
+            const tambah = getParameterByName('tambah', url);
+            const kurang = getParameterByName('kurang', url);
+            const reset = getParameterByName('reset', url);
+            
+            if (tambah) {
+                const value = parseInt(tambah, 10);
+                if (!isNaN(value)) { 
+                    currentNumber += value;
+                }
+            }
+
+            if (kurang) {
+                const value = parseInt(kurang, 10);
+                if (!isNaN(value)) {
+                    currentNumber -= value;
+                }
+            }
+
+            if(reset)
+            {
+                currentNumber = 0;
+            }
+
+            numberElement.textContent = currentNumber;
+            localStorage.setItem('currentNumber', currentNumber);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                const numberElement = document.getElementById('number');
+                let currentNumber = parseInt(numberElement.textContent, 10);
+                currentNumber += 1;
+                numberElement.textContent = currentNumber;
+                localStorage.setItem('currentNumber', currentNumber);
+            }
+        });
+ 
+
+        updateNumberByUrl();
+    </script>
+</body>
+</html>

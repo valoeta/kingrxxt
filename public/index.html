@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Black Background with Centered White Number</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-size: 5em; /* Adjust the font size as needed */
+            font-family: 'Jaro', Arial, sans-serif; /* Use 'Jaro' as the primary font */
+        }
+
+        @font-face {
+            font-family: 'Jaro';
+            src: url('path-to-your-jaro-font-file.ttf'); /* Specify the path to your Jaro font file */
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div id="number">0</div> <!-- Starting number -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('updateNumber', (number) => {
+            document.getElementById('number').textContent = number;
+        });
+
+        function changeNumber(params) {
+            socket.emit('changeNumber', params);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                changeNumber({ tambah: 1 });
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const path = window.location.pathname;
+            const regex = /\/(tambah|kurang)(\d+)/;
+            const match = path.match(regex);
+
+            if (match) {
+                const operation = match[1];
+                const value = parseInt(match[2], 10);
+                if (operation === 'tambah') {
+                    changeNumber({ tambah: value });
+                } else if (operation === 'kurang') {
+                    changeNumber({ kurang: value });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
